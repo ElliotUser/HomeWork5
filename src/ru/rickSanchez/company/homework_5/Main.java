@@ -35,13 +35,18 @@ public class Main {
             System.arraycopy(array,0,arrSplit_a,0,array.length/2);
             //второй массив
             System.arraycopy(array,array.length/2,arrSplit_b,0,array.length/2);
+
+            Thread thread_1 = new Thread();
+            thread_1.start();
             for(int j = 0; j < arrSplit_a.length; j++) {
                 arrSplit_a[j] = (float)(array[i] * Math.sin(0.2f + i / 5) * Math.cos(0.2f + i / 5) * Math.cos(0.4f + i / 2));
             }
-
+            thread_1.interrupt();
+            Thread thread_2 = new Thread();
             for(int j = 0; j < arrSplit_b.length; j++) {
                 arrSplit_b[j] = (float)(array[i] * Math.sin(0.2f + i / 5) * Math.cos(0.2f + i / 5) * Math.cos(0.4f + i / 2));
             }
+            thread_2.interrupt();
             //склеиваем обратно
             System.arraycopy(arrSplit_a,0,array,0,arrSplit_a.length-1);
             System.arraycopy(arrSplit_b,0,array,array.length/2,arrSplit_b.length-1);
