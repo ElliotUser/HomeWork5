@@ -1,9 +1,11 @@
 package ru.rickSanchez.company.homework_5;
 
 public class Main {
-    static final int size = 10000;
+    static final int size = 10000000;
+    static final int halfSize = size/2;
     //1) Создаем одномерный длинный массив, например:
     static float[] arr = new float[size];
+
     public static void main(String[] args) {
         //Отличие первого метода от второго:
         //Первый просто бежит по массиву и вычисляет значения.
@@ -25,12 +27,11 @@ public class Main {
         before = (int) System.currentTimeMillis();
         //4) Проходим по всему массиву и для каждой ячейки считаем новое
         //значение по формуле:
-        for(int i = 0; i < array.length; i++) {
             //разбиваем массив на два массива, в двух потоках
             // высчитывает новые значения и потом склеивает эти массивы
             // обратно в один.
-            float[] arrSplit_a = new float[size/2];
-            float[] arrSplit_b = new float[size/2];
+            float[] arrSplit_a = new float[halfSize];
+            float[] arrSplit_b = new float[halfSize];
             //первый массив
             System.arraycopy(array,0,arrSplit_a,0,array.length/2);
             //второй массив
@@ -39,18 +40,22 @@ public class Main {
             Thread thread_1 = new Thread();
             thread_1.start();
             for(int j = 0; j < arrSplit_a.length; j++) {
-                arrSplit_a[j] = (float)(array[i] * Math.sin(0.2f + i / 5) * Math.cos(0.2f + i / 5) * Math.cos(0.4f + i / 2));
+                arrSplit_a[j] = (float)(array[j] * Math.sin(0.2f + j / 5) * Math.cos(0.2f + j / 5) * Math.cos(0.4f + j / 2));
             }
             thread_1.interrupt();
+
+
             Thread thread_2 = new Thread();
-            for(int j = 0; j < arrSplit_b.length; j++) {
-                arrSplit_b[j] = (float)(array[i] * Math.sin(0.2f + i / 5) * Math.cos(0.2f + i / 5) * Math.cos(0.4f + i / 2));
+            thread_2.start();
+            for(int j = 0; j < arrSplit_a.length; j++) {
+                arrSplit_a[j] = (float)(array[j] * Math.sin(0.2f + j / 5) * Math.cos(0.2f + j / 5) * Math.cos(0.4f + j / 2));
             }
             thread_2.interrupt();
+
             //склеиваем обратно
             System.arraycopy(arrSplit_a,0,array,0,arrSplit_a.length-1);
             System.arraycopy(arrSplit_b,0,array,array.length/2,arrSplit_b.length-1);
-        }
+
         //5) Проверяется время окончания метода:
         after = (int) System.currentTimeMillis();
         //6) В консоль выводим время работы:
