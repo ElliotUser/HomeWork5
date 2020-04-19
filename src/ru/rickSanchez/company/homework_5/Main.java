@@ -3,7 +3,6 @@ package ru.rickSanchez.company.homework_5;
 public class Main {
     static final int size = 10000000;
     static final int halfSize = size/2;
-    //1) Создаем одномерный длинный массив, например:
     static float[] arr = new float[size];
 
     public static void main(String[] args) {
@@ -28,7 +27,7 @@ public class Main {
                 @Override
                 public void run() {
                     for(int j = 0; j < arrSplit_a.length; j++) {
-                        arrSplit_a[j] = (float)(array[j] * Math.sin(0.2f + j / 5) * Math.cos(0.2f + j / 5) * Math.cos(0.4f + j / 2));
+                        arrSplit_a[j] = (float)(arrSplit_a[j] * Math.sin(0.2f + j / 5) * Math.cos(0.2f + j / 5) * Math.cos(0.4f + j / 2));
                     }
                     System.out.println("Поток №1 закончил работу.");
                 }
@@ -37,8 +36,8 @@ public class Main {
         Thread thread_2 = new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    for(int j = 0; j < arrSplit_a.length; j++) {
-                        arrSplit_a[j] = (float)(array[j] * Math.sin(0.2f + j / 5) * Math.cos(0.2f + j / 5) * Math.cos(0.4f + j / 2));
+                    for(int j = 0; j < arrSplit_b.length; j++) {
+                        arrSplit_b[j] = (float)(arrSplit_b[j] * Math.sin(0.2f + j / 5) * Math.cos(0.2f + j / 5) * Math.cos(0.4f + j / 2));
                     }
                     System.out.println("Поток №2 закончил работу.");
                 }
