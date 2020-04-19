@@ -1,7 +1,7 @@
 package ru.rickSanchez.company.homework_5;
 
 public class Main {
-    static final int size = 10000000;
+    static final int size = 10;
     static final int halfSize = size/2;
     static float[] arr = new float[size];
 
@@ -26,8 +26,9 @@ public class Main {
             Thread thread_1 = new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    for(int j = 0; j < arrSplit_a.length; j++) {
-                        arrSplit_a[j] = (float)(arrSplit_a[j] * Math.sin(0.2f + j / 5) * Math.cos(0.2f + j / 5) * Math.cos(0.4f + j / 2));
+                    for(int j = 0; j < halfSize; j++) {
+                        arrSplit_a[j] = (float)(arrSplit_a[j] * Math.sin(0.2f + arrSplit_a[j] / 5) * Math.cos(0.2f + arrSplit_a[j] / 5) * Math.cos(0.4f + arrSplit_a[j] / 2));
+
                     }
                     System.out.println("Поток №1 закончил работу.");
                 }
@@ -36,8 +37,9 @@ public class Main {
         Thread thread_2 = new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    for(int j = 0; j < arrSplit_b.length; j++) {
-                        arrSplit_b[j] = (float)(arrSplit_b[j] * Math.sin(0.2f + j / 5) * Math.cos(0.2f + j / 5) * Math.cos(0.4f + j / 2));
+                    for(int j = 0; j < halfSize; j++) {
+                        arrSplit_b[j] = (float)(arrSplit_b[j] * Math.sin(0.2f + arrSplit_b[j] / 5) * Math.cos(0.2f + arrSplit_b[j] / 5) * Math.cos(0.4f + arrSplit_b[j] / 2));
+
                     }
                     System.out.println("Поток №2 закончил работу.");
                 }
@@ -67,7 +69,7 @@ public class Main {
         }
         before = System.currentTimeMillis();
         for(int i = 0; i < array.length; i++) {
-            array[i] = (float)(array[i] * Math.sin(0.2f + i / 5) * Math.cos(0.2f + i / 5) * Math.cos(0.4f + i / 2));
+            array[i] = (float)(array[i] * Math.sin(0.2f + array[i] / 5) * Math.cos(0.2f + array[i] / 5) * Math.cos(0.4f + array[i] / 2));
         }
         System.out.println("Время выполнения метода arrCalculation() = " + (System.currentTimeMillis()-before) + " мс.");
     }
