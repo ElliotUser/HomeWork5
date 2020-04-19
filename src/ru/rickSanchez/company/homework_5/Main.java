@@ -18,7 +18,6 @@ public class Main {
 
     public static void splitArray(float[] array) {
         long before = 0;
-        long after = 0;
         //2) Заполняем этот массив единицами:
         for(int i = 0; i < array.length; i++) {
             array[i] = 1;
@@ -77,7 +76,6 @@ public class Main {
 
     public static void arrCalculation(float[] array){
         long before = 0;
-        long after = 0;
         //2) Заполняем этот массив единицами:
         for(int i = 0; i < array.length; i++) {
             array[i] = 1;
