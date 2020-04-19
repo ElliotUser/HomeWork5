@@ -30,9 +30,9 @@ public class Main {
             float[] arrSplit_a = new float[halfSize];
             float[] arrSplit_b = new float[halfSize];
             //первый массив
-            System.arraycopy(array,0,arrSplit_a,0,array.length/2);
+            System.arraycopy(array,0,arrSplit_a,0,halfSize);
             //второй массив
-            System.arraycopy(array,array.length/2,arrSplit_b,0,array.length/2);
+            System.arraycopy(array,halfSize,arrSplit_b,0,halfSize);
 
             Thread thread_1 = new Thread(new Runnable() {
                 @Override
@@ -64,8 +64,8 @@ public class Main {
 
 
         //склеиваем обратно
-            System.arraycopy(arrSplit_a,0,array,0,arrSplit_a.length);
-            System.arraycopy(arrSplit_b,0,array,array.length/2,arrSplit_b.length);
+            System.arraycopy(arrSplit_a,0,array,0,halfSize);
+            System.arraycopy(arrSplit_b,0,array,halfSize,halfSize);
 
         //6) В консоль выводим время работы:
         System.out.println("Время выполнения метода splitArray = " + (System.currentTimeMillis()-before) + " мс.");
