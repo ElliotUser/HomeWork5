@@ -16,18 +16,16 @@ public class Main {
         splitArray(arr);
     }
 
-    public static void splitArray(float[] array){
-        int before = 0;
-        int after = 0;
+    public static void splitArray(float[] array) {
+        long before = 0;
+        long after = 0;
         //2) Заполняем этот массив единицами:
         for(int i = 0; i < array.length; i++) {
             array[i] = 1;
         }
         //3) Засекаем время выполнения:
-        before = (int) System.currentTimeMillis();
-        //4) Проходим по всему массиву и для каждой ячейки считаем новое
-        //значение по формуле:
-            //разбиваем массив на два массива, в двух потоках
+        before = System.currentTimeMillis();
+            //4)Разбиваем массив на два массива, в двух потоках
             // высчитывает новые значения и потом склеивает эти массивы
             // обратно в один.
             float[] arrSplit_a = new float[halfSize];
@@ -37,51 +35,62 @@ public class Main {
             //второй массив
             System.arraycopy(array,array.length/2,arrSplit_b,0,array.length/2);
 
-            Thread thread_1 = new Thread();
-            thread_1.start();
-            for(int j = 0; j < arrSplit_a.length; j++) {
-                arrSplit_a[j] = (float)(array[j] * Math.sin(0.2f + j / 5) * Math.cos(0.2f + j / 5) * Math.cos(0.4f + j / 2));
-            }
-            thread_1.interrupt();
+            Thread thread_1 = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    for(int j = 0; j < arrSplit_a.length; j++) {
+                        arrSplit_a[j] = (float)(array[j] * Math.sin(0.2f + j / 5) * Math.cos(0.2f + j / 5) * Math.cos(0.4f + j / 2));
+                    }
+                }
+            });
+        try {
+            thread_1.join();
+        } catch(InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        Thread thread_2 = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    for(int j = 0; j < arrSplit_a.length; j++) {
+                        arrSplit_a[j] = (float)(array[j] * Math.sin(0.2f + j / 5) * Math.cos(0.2f + j / 5) * Math.cos(0.4f + j / 2));
+                    }
+                }
+            });
+        try {
+            thread_2.join();
+        } catch(InterruptedException e) {
+            e.printStackTrace();
+        }
 
 
-            Thread thread_2 = new Thread();
-            thread_2.start();
-            for(int j = 0; j < arrSplit_a.length; j++) {
-                arrSplit_a[j] = (float)(array[j] * Math.sin(0.2f + j / 5) * Math.cos(0.2f + j / 5) * Math.cos(0.4f + j / 2));
-            }
-            thread_2.interrupt();
+        //склеиваем обратно
+            System.arraycopy(arrSplit_a,0,array,0,arrSplit_a.length);
+            System.arraycopy(arrSplit_b,0,array,array.length/2,arrSplit_b.length);
 
-            //склеиваем обратно
-            System.arraycopy(arrSplit_a,0,array,0,arrSplit_a.length-1);
-            System.arraycopy(arrSplit_b,0,array,array.length/2,arrSplit_b.length-1);
-
-        //5) Проверяется время окончания метода:
-        after = (int) System.currentTimeMillis();
         //6) В консоль выводим время работы:
-        System.out.println("Время выполнения = " + (after - before) + " мс.");
+        System.out.println("Время выполнения = " + (System.currentTimeMillis()-before) + " мс.");
     }
 
 
 
 
     public static void arrCalculation(float[] array){
-        int before = 0;
-        int after = 0;
+        long before = 0;
+        long after = 0;
         //2) Заполняем этот массив единицами:
         for(int i = 0; i < array.length; i++) {
             array[i] = 1;
         }
         //3) Засекаем время выполнения:
-        before = (int) System.currentTimeMillis();
+        before = System.currentTimeMillis();
         //4) Проходим по всему массиву и для каждой ячейки считаем новое
         //значение по формуле:
         for(int i = 0; i < array.length; i++) {
             array[i] = (float)(array[i] * Math.sin(0.2f + i / 5) * Math.cos(0.2f + i / 5) * Math.cos(0.4f + i / 2));
         }
         //5) Проверяется время окончания метода:
-        after = (int) System.currentTimeMillis();
         //6) В консоль выводим время работы:
-        System.out.println("Время выполнения = " + (after - before) + " мс.");
+        System.out.println("Время выполнения = " + (System.currentTimeMillis()-before) + " мс.");
     }
 }
