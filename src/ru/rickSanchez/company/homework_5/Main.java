@@ -68,7 +68,7 @@ public class Main {
             System.arraycopy(arrSplit_b,0,array,array.length/2,arrSplit_b.length);
 
         //6) В консоль выводим время работы:
-        System.out.println("Время выполнения = " + (System.currentTimeMillis()-before) + " мс.");
+        System.out.println("Время выполнения метода splitArray = " + (System.currentTimeMillis()-before) + " мс.");
     }
 
 
@@ -89,6 +89,6 @@ public class Main {
         }
         //5) Проверяется время окончания метода:
         //6) В консоль выводим время работы:
-        System.out.println("Время выполнения = " + (System.currentTimeMillis()-before) + " мс.");
+        System.out.println("Время выполнения метода arrCalculation = " + (System.currentTimeMillis()-before) + " мс.");
     }
 }
